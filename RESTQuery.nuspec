@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RESTQuery</id>
+    <version>$version$</version>
+    <title>RESTQuery</title>
+    <authors>Eric Newton</authors>
+    <owners>Eric Newton</owners>
+    <licenseUrl>https://raw.githubusercontent.com/ericnewton76/RESTQuery/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ericnewton76/RESTQuery/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A C# WebApi library for building REST queries server side using Dynamic Linq</description>
+    <copyright>Copyright 2018</copyright>
+    <tags>REST LINQ WebApi</tags>
+	<dependencies>
+		<dependency id="System.Linq.Dynamic" version="1.0.7" />
+	</dependencies>
+  </metadata>
+</package>
