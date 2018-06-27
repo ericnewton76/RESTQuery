@@ -34,5 +34,18 @@ namespace RESTQueryTests
 			fop.FilterValue.Should().Be(filterValue);
 		}
 
+		[Test]
+		public void EmptyKvpList()
+		{
+			//arrange
+			var list = new KeyValuePair<string, string>[0];
+
+			//act
+			var fop = new FilterOptionsParser().Parse(list);
+
+			//assert
+			fop.Should().HaveCount(0);
+		}
+
 	}
 }
