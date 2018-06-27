@@ -55,6 +55,7 @@ namespace RESTQuery
 		public static IQueryable<T> AddPaging<T>(this IQueryable<T> source, PagingOptions pagingOptions)
 		{
 			if(pagingOptions == null) return source;
+			if(pagingOptions.IsEmpty) return source;
 
 			return source
 				.Skip(pagingOptions.Start)
