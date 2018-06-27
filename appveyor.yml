@@ -41,7 +41,7 @@ cache:
  - packages -> **\packages.config
 
 artifacts:
-- path: Release\*.nupkg
+- path: Build\Release\*.nupkg
   name: NugetPackage
 
 deploy:
