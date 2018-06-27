@@ -27,7 +27,7 @@ init:
     }
 
 before_build:
-- cmd: nuget restore
+- cmd: nuget restore src\%APPVEYOR_PROJECT_NAME%.sln
 
 configuration: Release
 build:
