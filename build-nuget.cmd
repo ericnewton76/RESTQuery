@@ -1,4 +1,4 @@
-REM @ECHO OFF
+@ECHO OFF
 setlocal
 if "%PROJECTNAME%" == "" set PROJECTNAME=RESTQuery
 
@@ -24,7 +24,7 @@ if "%BUILD_VERSION%" == "" echo Missing BUILD_VERSION & set FAIL=true
 REM try install
 %NUGET_EXE% install
 if errorlevel 0 if not errorlevel 1 goto :NUGET_PACKAGES_INSTALLED
-if not "%NUGET_EXE%" == "nuget" if not exist "%NUGET_EXE%" echo Missing Nuget.Commandline.2.8.6 in packages, run %NUGET_EXE% Install & set FAIL=true
+if not "%NUGET_EXE%" == "nuget" if not exist "%NUGET_EXE%" echo Missing Nuget.Commandline.2.8.6 in packages, run %NUGET_EXE% restore & set FAIL=true
 if "%FAIL%" == "true" goto :END
 
 :NUGET_PACKAGES_INSTALLED
@@ -44,10 +44,16 @@ REM Create Nuget Package
 pushd Build
 rmdir /s /q Release 1>NUL 2>NUL
 
-xcopy %PROJECTNAME%\%PROJECTNAME%.* Release\lib /s /y
+echo.
+echo Copying assemblies to Release\lib
+xcopy %PROJECTNAME%\%PROJECTNAME%.* Release\lib /s /y /i
 
 pushd Release
+echo.
+echo Copying %PROJECTNAME%.nuspec
 copy ..\..\%PROJECTNAME%.nuspec
+echo.
+
 echo %NUGET_EXE% pack RESTQuery.nuspec -version %BUILD_VERSION%
 %NUGET_EXE% pack RESTQuery.nuspec -version %BUILD_VERSION%
 popd
