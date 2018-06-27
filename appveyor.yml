@@ -37,6 +37,9 @@ after_build:
 - cmd: >
     build-nuget.cmd --skip-build
 
+cache:
+ - packages -> **\packages.config
+
 artifacts:
 - path: Release\Nuget\*.nupkg
   name: NugetPackage
