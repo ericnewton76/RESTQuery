@@ -18,7 +18,7 @@ namespace RESTQuery
 		/// </summary>
 		/// <param name="filterOptions">A list of Filter Options to build a dynamic LINQ expression from</param>
 		/// <returns>Tuple that has Item1 as the string, Item2 as the list of values</returns>
-		public Tuple<string, List<object>> BuildExpressions(IEnumerable<FilterOptions> filterOptions)
+		public Tuple<string, List<object>> Build(IEnumerable<FilterOptions> filterOptions)
 		{
 			StringBuilder sb = new StringBuilder();
 			List<object> values = new List<object>();

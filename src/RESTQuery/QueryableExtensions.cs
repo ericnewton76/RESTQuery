@@ -90,11 +90,19 @@ namespace RESTQuery
 		/// <returns></returns>
 		public static IQueryable<T> AddFilters<T>(this IQueryable<T> source, IEnumerable<FilterOptions> filterOptions)
 		{
-			var exp = new FilterExpressionBuilder().BuildExpressions(filterOptions);
+			if(filterOptions == null) return source;
 
-			source = source.Where(exp.Item1, exp.Item2.ToArray());
+			var exp = new FilterExpressionBuilder().Build(filterOptions);
+			if(exp.Item1 == "")
+			{
+				return source;
+			}
+			else
+			{
+				source = source.Where(exp.Item1, exp.Item2.ToArray());
 
-			return source;
+				return source;
+			}
 		}
 
 		/// <summary>
@@ -106,6 +114,8 @@ namespace RESTQuery
 		/// <returns></returns>
 		public static IQueryable<T> AddFilters<T>(this IQueryable<T> source, IEnumerable<KeyValuePair<string,string>> GetQueryNameValuePairs)
 		{
+			if(GetQueryNameValuePairs == null) throw new ArgumentNullException(nameof(GetQueryNameValuePairs));
+
 			var filterOptions = new FilterOptionsParser().ParseFilters(GetQueryNameValuePairs);
 
 			return AddFilters(source, filterOptions);
