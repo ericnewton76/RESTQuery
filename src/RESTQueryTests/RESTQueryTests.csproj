@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="FilterExpressionBuilder_Tests.cs" />
     <Compile Include="FilterOptionsParser_Tests.cs" />
+    <Compile Include="PagingOptions_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
