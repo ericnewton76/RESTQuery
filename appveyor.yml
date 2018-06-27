@@ -25,7 +25,10 @@ init:
       Set-AppVeyorBuildVariable -Name APPVEYOR_BUILD_VERSION -Value $env:APPVEYOR_REPO_TAG_NAME.Substring(1)
   
     }
-  
+
+before_build:
+- cmd: nuget restore
+
 configuration: Release
 build:
   verbosity: normal
