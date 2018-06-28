@@ -14,6 +14,7 @@ namespace RESTQueryTests
 	public class QueryableExtensions_AddFilters_Tests
 	{
 
+
 		[Test]
 		public void Zero_Filters()
 		{
@@ -37,6 +38,24 @@ namespace RESTQueryTests
 
 			//act
 			var actual = QueryableExtensions.AddFilters(source, filters);
+
+			//assert
+			actual.Should().BeSameAs(source);
+		}
+
+		[Test]
+		public void EmptyKey()
+		{
+			//arrange
+			var source = new List<Object>().AsQueryable();
+			var GetQueryNameValuePairs =
+				new List<KeyValuePair<string, string>>()
+				{
+					new KeyValuePair<string, string>("","")
+				};
+
+			//act
+			var actual = QueryableExtensions.AddFilters(source, GetQueryNameValuePairs);
 
 			//assert
 			actual.Should().BeSameAs(source);

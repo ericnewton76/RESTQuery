@@ -20,6 +20,7 @@ namespace RESTQuery
 				_.Key.Equals("start", StringComparison.OrdinalIgnoreCase) == false 
 				&& _.Key.Equals("rows", StringComparison.OrdinalIgnoreCase) == false 
 				&& _.Key.Equals("sort", StringComparison.OrdinalIgnoreCase) == false
+				&& _.Key != ""
 			).ToList();
 
 			return Parse(qs);
