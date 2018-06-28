@@ -27,7 +27,7 @@ namespace RESTQueryTests
 			var filterOps = new FilterOptionsParser().Parse(new List<KeyValuePair<string, string>>() { filterkvp });
 
 			//act
-			var exp = new FilterExpressionBuilder().Build(filterOps);
+			var exp = new FilterExpressionBuilder().Build<TestObj>(filterOps);
 
 			//assert
 			exp.Item1.Should().Be(expr);
@@ -46,7 +46,7 @@ namespace RESTQueryTests
 			var filterOps = new FilterOptionsParser().Parse(items);
 
 			//act
-			var exp = new FilterExpressionBuilder().Build(filterOps);
+			var exp = new FilterExpressionBuilder().Build<TestObj>(filterOps);
 
 			//assert
 			exp.Item1.Should().Be(expr);

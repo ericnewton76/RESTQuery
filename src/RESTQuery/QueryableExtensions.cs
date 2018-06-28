@@ -92,7 +92,7 @@ namespace RESTQuery
 		{
 			if(filterOptions == null) return source;
 
-			var exp = new FilterExpressionBuilder().Build(filterOptions);
+			var exp = new FilterExpressionBuilder().Build<T>(filterOptions);
 			if(exp.Item1 == "")
 			{
 				return source;
