@@ -54,6 +54,38 @@ namespace RESTQueryTests
 		}
 
 		[Test]
+		[TestCase("Enabled.eq=true", false, false, "2211,4411,6611,8811")]
+		public void DynamicExpressions_TypeConversions(string filterstring, bool shouldContain1111, bool shouldContain9911, string expectedIds)
+		{
+			//arrange
+			var items = filterstring.Split('&').Select(_ => { var t = _.Split('='); return new KeyValuePair<string, string>(t[0], t[1]); });
+			var filterOps = new FilterOptionsParser().Parse(items);
+
+			var testObjList = CreateTestData();
+			var byKeys = testObjList.ToDictionary(_ => _.IdStr);
+
+			//act
+			var actual = QueryableExtensions.AddFilters(testObjList.AsQueryable(), filterOps)
+				.ToList();//run the query
+
+			//assert
+			var expectedIdsList = expectedIds.Split(',');
+			actual.Should().HaveCount(expectedIdsList.Count());
+
+			if(shouldContain1111)
+				actual.Should().Contain(byKeys["1111"]);
+			else
+				actual.Should().NotContain(byKeys["1111"]);
+
+			if(shouldContain9911)
+				actual.Should().Contain(byKeys["9911"]);
+			else
+				actual.Should().NotContain(byKeys["9911"]);
+
+			//actual.Should().ContainInOrder(expectedIdsList.ToArray());
+		}
+
+		[Test]
 		[TestCase("IdStr.eq=1111", true, false, "1111")]
 		[TestCase("IdStr.neq=1111&field2.neq=X", false, true, "2211,3311,4411,5511,6611,7711,8811,9911")]
 		[TestCase("IdStr.neq=1111&field2.eq=Some 22 Value", false, false, "2211")]
@@ -98,7 +130,8 @@ namespace RESTQueryTests
 			{
 				var x = new TestObj() {
 					IdStr = new string((char)(i + 48), 2) + "11",
-					Field2 = "Some " + new string((char)(i + 48), 2) + " Value"
+					Field2 = "Some " + new string((char)(i + 48), 2) + " Value",
+					Enabled = (i % 2 == 0)
 				};
 				list.Add(x);
 			};
@@ -110,6 +143,7 @@ namespace RESTQueryTests
 		{
 			public string IdStr { get; set; }
 			public string Field2 { get; set; }
+			public bool Enabled { get; set; }
 			public override string ToString()
 			{
 				return "id:" + IdStr + "=" + Field2;
@@ -120,6 +154,7 @@ namespace RESTQueryTests
 				if(y == null) return false;
 				if(this.IdStr.Equals(y.IdStr) == false) return false;
 				if(this.Field2.Equals(y.Field2) == false) return false;
+				if(this.Enabled.Equals(y.Enabled) == false) return false;
 				return true;
 			}
 		}
