@@ -55,6 +55,10 @@ namespace RESTQueryTests
 
 		[Test]
 		[TestCase("Enabled.eq=true", false, false, "2211,4411,6611,8811")]
+		[TestCase("IntField.eq=1111", true, false, "1111")]
+		[TestCase("IntField.neq=1111", false, true, "2211,3311,4411,5511,6611,7711,8811,9911")]
+		[TestCase("IntField.gt=1199", false, true, "2211,3311,4411,5511,6611,7711,8811,9911")]
+		[TestCase("IntField.lt=9900", true, false, "1111,2211,3311,4411,5511,6611,7711,8811")]
 		public void DynamicExpressions_TypeConversions(string filterstring, bool shouldContain1111, bool shouldContain9911, string expectedIds)
 		{
 			//arrange
@@ -144,6 +148,9 @@ namespace RESTQueryTests
 			public string IdStr { get; set; }
 			public string Field2 { get; set; }
 			public bool Enabled { get; set; }
+
+			public int IntField { get { return int.Parse(IdStr); } }
+
 			public override string ToString()
 			{
 				return "id:" + IdStr + "=" + Field2;
