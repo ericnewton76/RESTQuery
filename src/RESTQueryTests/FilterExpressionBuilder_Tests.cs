@@ -92,7 +92,7 @@ namespace RESTQueryTests
 		[TestCase("IdStr.sw=11", true, false, "1111")]
 		[TestCase("IdStr.endswith=11", true, true, "1111,2211,3311,4411,5511,6611,7711,8811,9911")]
 		[TestCase("IdStr.eq=2211", false, false, "2211")]
-		public void Queryable_Filter(string filterstring, bool shouldContain1111, bool shouldContain9911, string expectedIds)
+		public void DynamicExpressions(string filterstring, bool shouldContain1111, bool shouldContain9911, string expectedIds)
 		{
 			//arrange
 			var items = filterstring.Split('&').Select(_ => { var t = _.Split('='); return new KeyValuePair<string, string>(t[0], t[1]); });
