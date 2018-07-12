@@ -57,9 +57,15 @@ namespace RESTQuery
 			if(pagingOptions == null) return source;
 			if(pagingOptions.IsEmpty) return source;
 
-			return source
-				.Skip(pagingOptions.Start)
-				.Take(pagingOptions.Rows);
+			IQueryable<T> queryable = source;
+
+			if(pagingOptions.Start > 0)
+				queryable = queryable.Skip(pagingOptions.Start);
+
+			if(pagingOptions.Rows > 0)
+				queryable = queryable.Take(pagingOptions.Rows);
+
+			return queryable;
 		}
 
 		/// <summary>

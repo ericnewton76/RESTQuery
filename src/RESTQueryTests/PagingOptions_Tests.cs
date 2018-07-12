@@ -43,14 +43,7 @@ namespace RESTQueryTests
 			});
 		}
 
-		[Test]
-		public void Rows_LessThan_Zero_Fails()
-		{
-			Assert.Throws<ArgumentOutOfRangeException>(() =>
-			{
-				var pagingOptions = new PagingOptions() { Start = 0, Rows = -1 };
-			});
-		}
+		
 
 	}
 }

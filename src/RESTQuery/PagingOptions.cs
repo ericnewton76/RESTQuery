@@ -28,7 +28,7 @@ namespace RESTQuery
 			get { return this._rows; }
 			set
 			{
-				if(value < 0) throw new ArgumentOutOfRangeException(nameof(Rows), "Value less than zero is invalid.");
+				if(value < -1) value = -1;
 				this._rows = value;
 			}
 		}
