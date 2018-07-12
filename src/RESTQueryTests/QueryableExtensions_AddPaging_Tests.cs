@@ -100,6 +100,7 @@ namespace RESTQueryTests
 			//assert
 			testobj2.Should().NotBeSameAs(testobj1);
 			testobj2.Should().BeEquivalentTo(testobj1);
+			//testobj2.Should().Be(testobj1); //fails
 		}
 
 		class TestObject : IEquatable<TestObject>
