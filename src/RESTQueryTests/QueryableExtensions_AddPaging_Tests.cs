@@ -56,8 +56,8 @@ namespace RESTQueryTests
 			var actual = QueryableExtensions.AddPaging(source, pagingOptions).ToList();
 
 			//assert
-			//actual.Should().HaveElementAt(0, new TestObject { Index = ExpectedFirstIndex }); //fails
-			actual.Should().HaveElementAt(0, testobjCollection[ExpectedFirstIndex]);
+			actual.Should().HaveElementAt(0, new TestObject { Index = ExpectedFirstIndex });
+			//actual.Should().HaveElementAt(0, testobjCollection[ExpectedFirstIndex]);
 		}
 
 
@@ -100,7 +100,7 @@ namespace RESTQueryTests
 			//assert
 			testobj2.Should().NotBeSameAs(testobj1);
 			testobj2.Should().BeEquivalentTo(testobj1);
-			//testobj2.Should().Be(testobj1); //fails
+			testobj2.Should().Be(testobj1);
 		}
 
 		class TestObject : IEquatable<TestObject>
@@ -112,6 +112,11 @@ namespace RESTQueryTests
 				if(other == null) return false;
 				if(this.Index != other.Index) return false;
 				return true;
+			}
+
+			public override bool Equals(object obj)
+			{
+				return Equals(obj as TestObject);
 			}
 		}
 	}
