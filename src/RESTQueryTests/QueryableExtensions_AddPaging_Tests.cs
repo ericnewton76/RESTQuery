@@ -66,21 +66,22 @@ namespace RESTQueryTests
 		public void Rows_Unlimited()
 		{
 			//arrange
-			var source = GetTestObjectCollection().AsQueryable();
+			var testobjCollection = GetTestObjectCollection(999);
+			var source = testobjCollection.AsQueryable();
 			var pagingOptions = new PagingOptions() { Start = 0, Rows = -1 };
 
 			//act
 			var actual = QueryableExtensions.AddPaging(source, pagingOptions);
 
 			//assert
-			actual.Should().BeSameAs(source);
+			actual.Should().HaveCount(999);
 		}
 
-		List<TestObject> GetTestObjectCollection()
+		List<TestObject> GetTestObjectCollection(int count = 50)
 		{
-			var list = new List<TestObject>(50);
+			var list = new List<TestObject>(count);
 
-			for(int i = 0; i < 50; i++)
+			for(int i = 0; i < count; i++)
 			{
 				list.Add(new TestObject { Index = i });
 			}
