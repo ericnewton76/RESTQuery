@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="FilterExpressionBuilder_Tests.cs" />
     <Compile Include="FilterOptionsParser_Tests.cs" />
+    <Compile Include="FilterOptions_Tests.cs" />
     <Compile Include="PagingOptions_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryableExtensions_AddPaging_Tests.cs" />
