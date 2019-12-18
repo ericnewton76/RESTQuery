@@ -12,7 +12,7 @@ This library makes it easy to try to standardize REST server side filtering, sor
 
 - Paging is handled by querystring fields 'start' and 'rows'
 - Sorting is handled by querystring field 'sort'
-- Filtering is the rest of the querystring fields, and using a proposed REST API expression language found here: 
+- Filtering is the rest of the querystring fields, `price[lte]=3&price[gt]=0&desc~=the` which would filter for `0 > price >= 3 AND desc contains 'the'`  see also: 
 https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/
 
 # Quick Start
