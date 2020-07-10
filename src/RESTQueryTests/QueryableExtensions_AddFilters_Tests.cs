@@ -14,12 +14,16 @@ namespace RESTQueryTests
 	public class QueryableExtensions_AddFilters_Tests
 	{
 
+		public IEnumerable<TestObject> CreateTestObjectCollection(int count = 50)
+		{
+			return TestObject.CreateTestObjectCollection(count);
+		}
 
 		[Test]
 		public void Zero_Filters()
 		{
 			//arrange
-			var source = new List<Object>().AsQueryable();
+			var source = CreateTestObjectCollection().AsQueryable();
 			IEnumerable<FilterOptions> filters = new List<FilterOptions>();
 
 			//act
@@ -33,7 +37,7 @@ namespace RESTQueryTests
 		public void Null_Filters()
 		{
 			//arrange
-			var source = new List<Object>().AsQueryable();
+			var source = CreateTestObjectCollection().AsQueryable();
 			IEnumerable<FilterOptions> filters = null;
 
 			//act
@@ -47,7 +51,7 @@ namespace RESTQueryTests
 		public void EmptyKey()
 		{
 			//arrange
-			var source = new List<Object>().AsQueryable();
+			var source = CreateTestObjectCollection().AsQueryable();
 			var GetQueryNameValuePairs =
 				new List<KeyValuePair<string, string>>()
 				{
