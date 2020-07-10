@@ -29,7 +29,7 @@ if "%FAIL%" == "true" goto :END
 
 :NUGET_PACKAGES_INSTALLED
 
-mkdir Build 2>NUL
+mkdir dist 2>NUL
 
 if "%1" == "--after-build" goto :SKIP_BUILD
 
@@ -41,7 +41,7 @@ shift
 :SKIP_BUILD
 
 REM Create Nuget Package
-pushd Build
+pushd dist
 rmdir /s /q Release 1>NUL 2>NUL
 
 echo.
