@@ -26,7 +26,6 @@ namespace RESTQuery
 			return Parse(qs, ignoreKeys);
 		}
 
-		}
 
 		#region different style parsers
 		private static FOP LastDotStyle(string key)

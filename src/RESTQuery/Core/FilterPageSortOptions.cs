@@ -19,7 +19,7 @@ namespace RESTQuery
 		/// Gets or sets filters
 		/// </summary>
 		public IEnumerable<FilterOptions> Filters { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets the paging options
 		/// </summary>
