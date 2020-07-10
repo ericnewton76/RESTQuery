@@ -1,12 +1,13 @@
 @ECHO OFF
 setlocal
-if "%PROJECTNAME%" == "" set PROJECTNAME=RESTQuery
+set PROJECTNAME=RESTQuery
 
 REM initialization
 set PACKAGES_ROOT=%~dp0packages
 
 if not "%NUGET_EXE%" == "" goto :CHECK_NUGET
 where nuget 1>NUL 2>NUL
+if %ERRORLEVEL% == 1 set NUGET_EXE=packages\NuGet.CommandLine.5.6.0\tools\NuGet.exe
 if %ERRORLEVEL% == 0 set NUGET_EXE=nuget
 
 :CHECK_NUGET
@@ -34,7 +35,7 @@ mkdir dist 2>NUL
 if "%1" == "--after-build" goto :SKIP_BUILD
 
 echo.
-if "%1" == "--no-msbuild" goto :SKIP_BUILD
+if "%1" == "--skip-build" goto :SKIP_BUILD
 call .\build.cmd & if errorlevel 1 goto :END
 shift
 
@@ -51,7 +52,7 @@ xcopy %PROJECTNAME%\%PROJECTNAME%.* Release\lib /s /y /i
 pushd Release
 echo.
 echo Copying %PROJECTNAME%.nuspec
-copy ..\..\%PROJECTNAME%.nuspec
+copy ..\..\%PROJECTNAME%.nuspec .
 echo.
 
 echo %NUGET_EXE% pack RESTQuery.nuspec -version %BUILD_VERSION%

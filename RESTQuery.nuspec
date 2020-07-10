@@ -16,4 +16,6 @@
 		<dependency id="System.Linq.Dynamic" version="1.0.7" />
 	</dependencies>
   </metadata>
+  <files>
+  </files>
 </package>
