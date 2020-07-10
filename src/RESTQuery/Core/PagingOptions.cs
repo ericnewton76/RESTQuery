@@ -1,11 +1,13 @@
 ﻿
 using System;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 
 namespace RESTQuery
 {
 
 	[DataContract]
+	[DebuggerDisplay("Start={Start} Rows={Rows}")]
 	public class PagingOptions
 	{
 		private int _start;
