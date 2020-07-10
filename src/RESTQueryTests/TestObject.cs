@@ -9,11 +9,13 @@ namespace RESTQueryTests
 	public class TestObject : IEquatable<TestObject>
 	{
 		public int Index { get; set; }
+		public string String { get; set; }
 
 		public bool Equals(TestObject other)
 		{
 			if (other == null) return false;
 			if (this.Index != other.Index) return false;
+			if (this.String != other.String) return false;
 			return true;
 		}
 
@@ -29,7 +31,10 @@ namespace RESTQueryTests
 
 			for (int i = 0; i < count; i++)
 			{
-				list.Add(new TestObject { Index = i });
+				list.Add(new TestObject { 
+					Index = i, 
+					String = i.ToString() 
+				});
 			}
 
 			return list;

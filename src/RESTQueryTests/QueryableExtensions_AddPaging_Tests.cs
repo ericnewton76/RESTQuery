@@ -56,7 +56,7 @@ namespace RESTQueryTests
 			var actual = QueryableExtensions.AddPaging(source, pagingOptions).ToList();
 
 			//assert
-			actual.Should().HaveElementAt(0, new TestObject { Index = ExpectedFirstIndex });
+			actual.Should().HaveElementAt(0, new TestObject { Index = ExpectedFirstIndex, String = ExpectedFirstIndex.ToString() });
 			//actual.Should().HaveElementAt(0, testobjCollection[ExpectedFirstIndex]);
 		}
 
@@ -83,7 +83,7 @@ namespace RESTQueryTests
 
 			for(int i = 0; i < count; i++)
 			{
-				list.Add(new TestObject { Index = i });
+				list.Add(new TestObject { Index = i, String = i.ToString() });
 			}
 
 			return list;
