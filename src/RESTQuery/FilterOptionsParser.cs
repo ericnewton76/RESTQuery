@@ -14,7 +14,7 @@ namespace RESTQuery
 		/// </summary>
 		/// <param name="GetQueryNameValuePairs"></param>
 		/// <returns></returns>
-		public FilterOptions[] ParseFilters(IEnumerable<KeyValuePair<string,string>> GetQueryNameValuePairs)
+		public IEnumerable<FilterOptions> ParseFilters(IEnumerable<KeyValuePair<string,string>> GetQueryNameValuePairs, params string[] ignoreKeys)
 		{
 			var qs = GetQueryNameValuePairs.Where(_ => 
 				_.Key.Equals("start", StringComparison.OrdinalIgnoreCase) == false 
@@ -23,7 +23,9 @@ namespace RESTQuery
 				&& _.Key != ""
 			).ToList();
 
-			return Parse(qs);
+			return Parse(qs, ignoreKeys);
+		}
+
 		}
 
 		#region different style parsers
@@ -73,15 +75,18 @@ namespace RESTQuery
 		}
 		#endregion
 
-		public FilterOptions[] Parse(IEnumerable<KeyValuePair<string,string>> qs)
+		public IEnumerable<FilterOptions> Parse(IEnumerable<KeyValuePair<string,string>> qs, params string[] ignoreKeys)
 		{
 			List<FilterOptions> list = new List<FilterOptions>();
+			if (ignoreKeys == null) ignoreKeys = new string[0]; // S_EmptyStringArray;
 
 			foreach(var kvp in qs)
 			{
 				try
 				{
 					string key = kvp.Key;
+
+					if (ignoreKeys.Contains(key)) continue;
 
 					Func<string, FOP> styleparser = LastDotStyle;
 
@@ -108,7 +113,7 @@ namespace RESTQuery
 				}
 			}
 
-			return list.ToArray();
+			return list;
 		}
 
 		private bool TryParse_OpShorthand(string value, out Operator op)

@@ -118,11 +118,11 @@ namespace RESTQuery
 		/// <param name="source"></param>
 		/// <param name="GetQueryNameValuePairs">pass Request.GetQueryNameValuePairs() to this parameter</param>
 		/// <returns></returns>
-		public static IQueryable<T> AddFilters<T>(this IQueryable<T> source, IEnumerable<KeyValuePair<string,string>> GetQueryNameValuePairs)
+		public static IQueryable<T> AddFilters<T>(this IQueryable<T> source, IEnumerable<KeyValuePair<string,string>> GetQueryNameValuePairs, params string[] ignoreKeys)
 		{
 			if(GetQueryNameValuePairs == null) throw new ArgumentNullException(nameof(GetQueryNameValuePairs));
 
-			var filterOptions = new FilterOptionsParser().ParseFilters(GetQueryNameValuePairs);
+			var filterOptions = new FilterOptionsParser().ParseFilters(GetQueryNameValuePairs, ignoreKeys);
 
 			return AddFilters(source, filterOptions);
 		}
