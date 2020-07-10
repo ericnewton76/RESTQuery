@@ -104,21 +104,5 @@ namespace RESTQueryTests
 			testobj2.Should().Be(testobj1);
 		}
 
-		class TestObject : IEquatable<TestObject>
-		{
-			public int Index { get; set; }
-
-			public bool Equals(TestObject other)
-			{
-				if(other == null) return false;
-				if(this.Index != other.Index) return false;
-				return true;
-			}
-
-			public override bool Equals(object obj)
-			{
-				return Equals(obj as TestObject);
-			}
-		}
 	}
 }
