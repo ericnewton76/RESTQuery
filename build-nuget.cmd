@@ -2,6 +2,13 @@
 setlocal
 set PROJECTNAME=RESTQuery
 
+REM appveyor
+if not "%APPVEYOR_BUILD_VERSION%" == "" set BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
+if "%APPVEYOR%" == "true" echo using nuget from Appveyor environment & set NUGET_EXE=nuget
+
+REM checks
+if "%BUILD_VERSION%" == "" echo Missing BUILD_VERSION & set FAIL=true & goto :FAIL
+
 REM initialization
 set PACKAGES_ROOT=%~dp0packages
 
@@ -12,25 +19,16 @@ if %ERRORLEVEL% == 0 set NUGET_EXE=nuget
 
 :CHECK_NUGET
 %NUGET_EXE% 1>NUL 2>NUL
-if errorlevel 1 echo Missing nuget from path set NUGET_EXE & goto :END
+if errorlevel 1 echo Missing nuget from path. set NUGET_EXE=[how to call nuget] & goto :FAIL
 
 :NUGET_EXE
-REM appveyor
-if not "%APPVEYOR_BUILD_VERSION%" == "" set BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
-if not "%APPVEYOR_BUILD_VERSION%" == "" echo using nuget from Appveyor environment & set NUGET_EXE=nuget
-
-REM checks
-if "%BUILD_VERSION%" == "" echo Missing BUILD_VERSION & set FAIL=true
 
 REM try install
-%NUGET_EXE% install
-if errorlevel 0 if not errorlevel 1 goto :NUGET_PACKAGES_INSTALLED
-if not "%NUGET_EXE%" == "nuget" if not exist "%NUGET_EXE%" echo Missing Nuget.Commandline.2.8.6 in packages, run %NUGET_EXE% restore & set FAIL=true
-if "%FAIL%" == "true" goto :END
 
 :NUGET_PACKAGES_INSTALLED
 
 mkdir dist 2>NUL
+if not exist "dist\." echo Failed to create 'dist' folder &  goto :FAIL
 
 if "%1" == "--after-build" goto :SKIP_BUILD
 
@@ -43,15 +41,23 @@ shift
 
 REM Create Nuget Package
 pushd dist
-rmdir /s /q Release 1>NUL 2>NUL
+pwd
 
 echo.
-echo Copying assemblies to Release\lib
-xcopy %PROJECTNAME%\%PROJECTNAME%.* Release\lib /s /y /i
+echo Cleaning out nupkg directory...
+rmdir /s /q nupkg 1>NUL 2>NUL
+REM xcopy will recreate nupkg
 
-pushd Release
 echo.
-echo Copying %PROJECTNAME%.nuspec
+echo Copying assemblies to dist/nupkg
+echo xcopy Release\%PROJECTNAME%.* nupkg\lib /s /y /i
+xcopy Release\%PROJECTNAME%.* nupkg\lib /s /y /i
+
+pushd nupkg
+pwd
+
+echo.
+echo copy ..\..\%PROJECTNAME%.nuspec .
 copy ..\..\%PROJECTNAME%.nuspec .
 echo.
 
@@ -62,6 +68,12 @@ popd
 
 REM if not "%1" == "--no-deploy" %NUGET_EXE% push
 shift
+
+goto :END
+
+:FAIL
+echo An error occurred.
+if %ERRORLEVEL% == 0 EXIT /B 1
 
 :END
 

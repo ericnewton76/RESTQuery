@@ -31,19 +31,17 @@ init:
 before_build:
 - cmd: nuget restore src\%APPVEYOR_PROJECT_NAME%.sln
 
-configuration: Release
-build:
-  verbosity: normal
+build_script:
+- cmd: build
 
 after_build:
-- cmd: >
-    build-nuget.cmd --skip-build
+- cmd: build-nuget.cmd --skip-build
 
 cache:
  - packages -> **\packages.config
 
 artifacts:
-- path: dist\Release\*.nupkg
+- path: dist\nupkg\*.nupkg
   name: NugetPackage
 
 deploy:
