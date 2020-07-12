@@ -8,9 +8,17 @@ namespace RESTQuery
 {
 	public class FilterOptions
 	{
+
+		/// <summary>
+		/// Construct a new FilterOptions instance
+		/// </summary>
+		/// <param name="field">field to filter</param>
+		/// <param name="operator">operator</param>
+		/// <param name="value">value</param>
 		public FilterOptions(string field, Operator @operator, string value)
 		{
-			if(field == null) throw new ArgumentNullException("field");
+			if(string.IsNullOrEmpty(field)) throw new ArgumentException("field is null or empty.");
+			if (@operator == Operator.Unspecified) throw new ArgumentException("operator is unspecified.");
 
 			this.Field = field;
 			this.Operator = @operator;
@@ -52,6 +60,7 @@ namespace RESTQuery
 
 	public enum Operator
 	{
+		Unspecified,
 		LessThan,
 		GreaterThan,
 		Equal,
@@ -63,6 +72,8 @@ namespace RESTQuery
 		StartsWith,
 		Contains,
 		EndsWith,
+		//IsNull,
+		//IsNotNull,
 		Regex
 	}
 }
