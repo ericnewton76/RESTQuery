@@ -1,10 +1,13 @@
 if($env:APPVEYOR_REPO_TAG -eq "true" -And $env:APPVEYOR_REPO_TAG_NAME.StartsWith("v") -eq $true) {
 
-	$build = $env:APPVEYOR_REPO_TAG_NAME.Substring(1)
+	& "$PSScriptRoot\Reset-BuildNumber"
+
+	$build = $env:APPVEYOR_REPO_TAG_NAME.Substring(1) + ".0"
 
 	Write-Host "Setting Build to '$build'."
-	Update-AppveyorBuild -Version $build
-
-	.\Reset-BuildNumber
+	
+	if($env:APPVEYOR -eq "True") {
+		Update-AppveyorBuild -Version $build
+	}
 	
 }
