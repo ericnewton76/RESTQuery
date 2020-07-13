@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 
-namespace RESTQuery
+namespace RESTQuery.Parsers
 {
 	public class FilterOptionsParser
 	{

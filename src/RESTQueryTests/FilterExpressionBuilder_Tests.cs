@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using FluentAssertions;
 using RESTQuery;
+using RESTQuery.Parsers;
 
 namespace RESTQueryTests
 {

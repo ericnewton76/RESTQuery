@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using NUnit.Framework;
-using RESTQuery;
 using FluentAssertions;
 
-namespace RESTQueryTests
+using RESTQuery;
+using RESTQuery.Parsers;
+
+namespace RESTQueryTests.Parsers
 {
 	[TestFixture]
 	public class FilterOptionsParser_Tests

@@ -52,13 +52,14 @@
   <ItemGroup>
     <Compile Include="FilterExpressionBuilder.cs" />
     <Compile Include="Core\FilterOptions.cs" />
-    <Compile Include="FilterOptionsParser.cs" />
+    <Compile Include="Parsers\FilterOptionsParser.cs" />
     <Compile Include="Core\FilterPageSortOptions.cs" />
     <Compile Include="Core\PagingOptions.cs" />
+    <Compile Include="FilterPagingSortOptionsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryableExtensions.cs" />
     <Compile Include="Core\SortOption.cs" />
-    <Compile Include="SortOptionsParser.cs" />
+    <Compile Include="Parsers\SortOptionsParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

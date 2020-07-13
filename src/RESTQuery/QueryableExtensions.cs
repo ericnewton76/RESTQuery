@@ -6,6 +6,8 @@ using System.Web;
 using System.Linq.Dynamic;
 using System.Text;
 
+using RESTQuery.Parsers;
+
 namespace RESTQuery
 {
 	public static class QueryableExtensions

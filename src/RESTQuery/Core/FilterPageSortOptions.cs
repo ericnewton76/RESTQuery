@@ -67,9 +67,16 @@ namespace RESTQuery
 				List<FilterOptions> filters = this.Filters as List<FilterOptions>;
 				if (filters == null) 
 				{
-					//convert to List
-					filters = this.Filters.ToList();
-					this.Filters = filters; 
+					if (this.Filters == null)
+					{
+						this.Filters = filters = new List<FilterOptions>();
+					}
+					else
+					{
+						//convert to List
+						filters = this.Filters.ToList();
+						this.Filters = filters;
+					}
 				}
 
 				filters.Add(filterOption);
