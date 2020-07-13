@@ -1,17 +1,20 @@
 version: 0.6.2.{build}
-
 image: Visual Studio 2019
+configuration: Release
 
 pull_requests:
   do_not_increment_build_number: true
-
 shallow_clone: true
-
 clone_depth: 1
 
 environment:
   APPVEYOR_API_TOKEN:
     secure: NxBAa7ezdNWaZz4F3Np5ZQd3iAFSSHEL0vYdPPgKiD4=
+
+cache: packages -> **\packages.config
+
+install:
+- ps: .\build\Set-TaggedBuildVersion
 
 assembly_info:
   patch: true
@@ -20,24 +23,15 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 
+build:
+  verbosity: minimal
+
 nuget:
   account_feed: true
   project_feed: true
 
-before_build:
-- ps: >-
-    .\build\Set-TaggedBuildVersion
-
-    nuget restore src\$env:APPVEYOR_PROJECT_NAME.sln
-
-build_script:
-- cmd: build
-
-after_build:
-- cmd: build-nuget.cmd --skip-build
-
-cache:
- - packages -> **\packages.config
+before_package:
+- ps: .\build-nuget.cmd
 
 artifacts:
 - path: dist\nupkg\*.nupkg

@@ -27,14 +27,19 @@ REM try install
 
 :NUGET_PACKAGES_INSTALLED
 
+:CLEAN_DIST
+echo Cleaning dist\Release
+rmdir /s /q dist\Release 1>NUL 2>NUL
+
 mkdir dist 2>NUL
 if not exist "dist\." echo Failed to create 'dist' folder &  goto :FAIL
 
-if "%1" == "--after-build" goto :SKIP_BUILD
+echo.
+if "%1" == "--skip-build" echo **SKIPPING BUILD & goto :SKIP_BUILD
 
 echo.
-if "%1" == "--skip-build" goto :SKIP_BUILD
-call .\build.cmd & if errorlevel 1 goto :END
+msbuild src\%PROJECTNAME%\%PROJECTNAME%.csproj /p:OutputPath=..\..\dist\Release /p:Configuration=Release
+
 shift
 
 :SKIP_BUILD
